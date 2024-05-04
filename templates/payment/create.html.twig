@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Payment{% endblock %}
+
+{% block body %}
+
+<form action="/payment/create" method="post">
+    <input type="number" name="amount" value="amount">
+    {# <input type="text" name="param2" value="value2"> #}
+    <button type="submit">Submit</button>
+</form>
+
+
+ {# {{ form_start(form)}}
+   {{ form_row(form.amount)}}
+   <button type="submit">Create Payment</button>
+ {{ form_end(form)}} #}
+{% endblock %}
