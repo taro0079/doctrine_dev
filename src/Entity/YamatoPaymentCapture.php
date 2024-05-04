@@ -13,4 +13,9 @@ class YamatoPaymentCapture extends PaymentCapture
 {
     #[ORM\Column(type: Types::INTEGER)]
     private int $amount;
+
+    public function setAmount(int $amount): void
+    {
+        $this->amount = $amount;
+    }
 }

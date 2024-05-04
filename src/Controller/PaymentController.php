@@ -2,15 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Payment;
 use App\Entity\YamatoPaymentCapture;
 use App\Entity\YuseiPaymentCapture;
 use App\Repository\PaymentRepository;
+use App\Service\PaymentRegisterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Uid\Uuid;
 
 class PaymentController extends AbstractController
 {
@@ -24,14 +23,11 @@ class PaymentController extends AbstractController
     public function create(Request $request): Response
     {
         if ($request->isMethod('POST')) {
-            var_dump($request->request->all());
-            $amount = $request->get('amount');
-            $payment = new Payment(Uuid::v4());
-            $yuseiPaymentCapture = new YuseiPaymentCapture(Uuid::v4());
-            $yuseiPaymentCapture->setAmount($amount);
-            $payment->setAmount($amount);
-            $payment->setPaymentCapture($yuseiPaymentCapture);
-            $this->paymentRepository->savePayment($payment);
+            $service = new PaymentRegisterService($this->paymentRepository);
+            $service->execute(
+                (int)$request->request->get('amount'),
+                $request->request->get('capture_type')
+            );
         }
 
         $captureType = [
