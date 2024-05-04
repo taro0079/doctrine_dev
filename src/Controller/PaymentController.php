@@ -3,12 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Payment;
-use App\Entity\PaymentCapture;
+use App\Entity\YamatoPaymentCapture;
 use App\Entity\YuseiPaymentCapture;
-use App\Form\PaymentCaptureFormType;
-use App\Form\PaymentFormType;
-use App\Form\PaymentRegisterForm;
-use App\Form\YuseiPaymentCaptureFormType;
 use App\Repository\PaymentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +24,7 @@ class PaymentController extends AbstractController
     public function create(Request $request): Response
     {
         if ($request->isMethod('POST')) {
+            var_dump($request->request->all());
             $amount = $request->get('amount');
             $payment = new Payment(Uuid::v4());
             $yuseiPaymentCapture = new YuseiPaymentCapture(Uuid::v4());
@@ -37,10 +34,15 @@ class PaymentController extends AbstractController
             $this->paymentRepository->savePayment($payment);
         }
 
+        $captureType = [
+            YuseiPaymentCapture::class,
+            YamatoPaymentCapture::class
+        ];
 
 
 
-        return $this->render('payment/create.html.twig', []);
+
+        return $this->render('payment/create.html.twig', ['capture_types' => $captureType]);
     }
 
     #[Route('/payment', name: 'payment_index')]
