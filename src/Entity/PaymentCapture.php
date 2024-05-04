@@ -19,8 +19,8 @@ class PaymentCapture
     #[ORM\OneToOne(mappedBy: 'paymentCapture')]
     private Payment $payment;
 
-    #[ORM\OneToOne(mappedBy: 'paymentCapture')]
-    private ?YamatoPaymentCapture $yamatoPaymentCapture;
+    // #[ORM\OneToOne(mappedBy: 'paymentCapture')]
+    // private ?YamatoPaymentCapture $yamatoPaymentCapture;
 
     public function __construct(
         string $paymentCaptureId,
@@ -28,10 +28,10 @@ class PaymentCapture
         $this->paymentCaptureId = $paymentCaptureId;
     }
 
-    public function setYamatoPaymentCapture(YamatoPaymentCapture $yamatoPaymentCapture): void
-    {
-        $this->yamatoPaymentCapture = $yamatoPaymentCapture;
-    }
+    // public function setYamatoPaymentCapture(YamatoPaymentCapture $yamatoPaymentCapture): void
+    // {
+    //     $this->yamatoPaymentCapture = $yamatoPaymentCapture;
+    // }
 
     public function getPaymentCaptureId(): string
     {
