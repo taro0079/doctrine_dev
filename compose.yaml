@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+  minio:
+    image: minio/minio
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      MINIO_ROOT_USER: "minio_root"
+      MINIO_ROOT_PASSWORD: "minio_password"
+    command: server /export --address :9000 --console-address :9001
+    volumes:
+      - ./docker/minio/data:/export
 ###> doctrine/doctrine-bundle ###
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
